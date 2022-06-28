@@ -29,8 +29,8 @@
           apiEndpoint: "https://api.cf.us10.hana.ondemand.com"
           org: "2fa4dbc2trial"
           space: "dev"
-          credentialsId: ""
+          credentialsId: "cfdeploy"
           appName: ""
         mtaDeployParameters: "-f --version-rule ALL"
-     artifactPrepareVersion:
+      artifactPrepareVersion:
         versioningType: "cloud_noTag"
