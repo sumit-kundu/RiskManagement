@@ -7,6 +7,6 @@ create-services:
     broker: xsuaa
     plan: "broker"
 # ------------------------------------------------------------
-  - name:   risk-management-db
-    broker: hana  # 'hanatrial' on trial landscapes
+  - name:   risk-managemen-db
+    broker: hanatrial  # 'hanatrial' on trial landscapes
     plan: "hdi-shared"

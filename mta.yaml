@@ -27,7 +27,7 @@ modules:
    requires:
     # Resources extracted from CAP configuration
     - name: risk-management-xsuaa
-    - name: risk-management-db
+    - name: risk-managemen-db
     - name: risk-management-destination-service
    provides:
     - name: srv-api      # required by consumers of CAP services (e.g. approuter)
@@ -44,9 +44,37 @@ modules:
    requires:
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
     - name: risk-management-xsuaa
-    - name: risk-management-db
+    - name: risk-managemen-db
 
 
+ # --------------------  APPROUTER -----------------------------
+ - name: risk-management-approuter
+ # ------------------------------------------------------------
+   type: nodejs
+   path: approuter
+   requires:
+     - name: risk-management-xsuaa
+     - name: srv-api
+       group: destinations
+       properties:
+         forwardAuthToken: true
+         strictSSL: true
+         name: srv-binding
+         url: "~{srv-url}"
+   build-parameters:
+     requires:
+       - name: risk-management-app
+         artifacts:
+           - ./*
+         target-path: resources
+
+# ------------------- UI ------------------------
+ - name: risk-management-app
+# ------------------------------------------------------------
+   type: html5
+   path: app
+   build-parameters:
+     supported-platforms: []
 
 resources:
  # services extracted from CAP configuration
@@ -59,8 +87,20 @@ resources:
      service: xsuaa
      service-plan: application  
      path: ./xs-security.json
+     config:
+       xsappname: 'risk-management-${space}'
+       role-collections:
+        - name: 'RiskManager-${space}'
+          description: Manage Risks
+          role-template-references:
+          - $XSAPPNAME.RiskManager
+        - name: 'RiskViewer-${space}'
+          description: View Risks
+          role-template-references:
+          - $XSAPPNAME.RiskViewer
+          
 # ------------------------------------------------------------
- - name: risk-management-db
+ - name: risk-managemen-db
 # ------------------------------------------------------------
    type: com.sap.xs.hdi-container
    parameters:
@@ -76,4 +116,3 @@ resources:
    parameters:
      service: destination
      service-plan: lite
-

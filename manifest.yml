@@ -14,7 +14,7 @@ applications:
   buildpack: nodejs_buildpack
   services:
   - risk-management-xsuaa
-  - risk-management-db
+  - risk-managemen-db
   - risk-management-destination-service
 
 # -----------------------------------------------------------------------------------
@@ -28,4 +28,4 @@ applications:
   instances: 1
   buildpack: nodejs_buildpack
   services:
-  - risk-management-db
+  - risk-managemen-db
